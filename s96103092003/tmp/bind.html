@@ -1,0 +1,106 @@
+<html>
+    <head>
+        
+        <style>
+            
+        </style>
+        <script src="../scripts/jQuery.js"></script>
+        <script type = "text/javascript">
+            $(document).ready(function(){ 
+                $('input').css({
+                    'font-size': '28px',
+                    'width': '100%'
+                });
+                $('p').css({
+                    'font-size': '28px',
+                });
+                var userID;
+                $.post('/getID', "getID", function(data, status){   
+                    userID = data;
+                    data1 = data+"a";
+                    if(data1 == "a"){
+                        alert("請從LINE綁定!!");
+                        window.opener=self;
+                        window.setTimeout("window.close()",0);
+                    }
+                });
+                $(window).resize(function(){
+                $("#container").css('width', $(window).width());
+                });                
+               $('#sumbit').on('click',function(){
+                          
+                    user = $( "#user" ).val();
+                    password = $( "#password" ).val();
+                    
+                    if(user.length>0 && password.length>0){
+                        var userdata = {
+                            "user": user, 
+                            "password": password,
+                            "userID": userID
+                        };
+                        $.post('/bind', userdata, function(data, status){
+                            alert(data);
+                            if(data == "無此帳號" || data =="以綁定過帳號"){
+                                $( "#user" ).val("");
+                                $( "#password" ).val("");
+                            }
+                            else if(data == "密碼錯誤"){
+                                $( "#password" ).val("");
+                            }
+                        });
+                    }
+                    else{
+                        alert("請輸入帳密");
+                    }
+                });
+                     
+                  /* $.ajax({
+                        "url": url,
+                        "data": userdata,
+                        "complete" :function(msg){
+                            alert("Data: " + JSON.stringify(msg.responseText));
+                        },
+                        "type": 'POST',
+                        "contentType": 'application/html; charset=utf-8',
+                        "dataType": 'json',
+                    });
+                    
+                });*/
+                
+            
+        });     
+        </script>
+        
+    </head>
+    <body>
+        
+        <div align="center">
+            <h1>綁定</h1>
+            <table border = "0">
+                <td>
+                    <p class="log">user<p>
+                </td>
+                <td>
+                    <input name="user" id = "user" type = "text" class="log"></input>
+                </td>
+                
+                <tr>
+                    <td>
+                        <p class="log">password</p>
+                    </td>
+                    <td>
+                        <input name="password" id = "password" type = "text" class="log"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>              
+                    </td>
+                    <td>
+                        <input type="submit" id = "sumbit"  value = "sumbit" ></input>                
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+
+</html>

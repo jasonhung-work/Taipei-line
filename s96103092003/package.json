@@ -1,0 +1,20 @@
+{
+  "name": "ElectricPot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "btoa": "^1.1.2",
+    "log4js": "^1.1.1",
+    "log4js-extend": "^0.1.2",
+    "mongoose": "latest",
+    "azure-storage": "latest",
+    "activedirectory": "latest"
+  }
+}

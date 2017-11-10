@@ -1,0 +1,15 @@
+{
+    "channel_id": "1523335590",
+    "channel_secret": "651ebdaf5bc69e83809e42332d57cd1f",
+    "channel_access_token": "UdEIjSxcOqS+Zxms5N0Gbb0Rmo9cRkCLWIliE7HUxTLvJllNawffFhVSYVcWCvMywzRe+oiCGqPU28P4z99oVtKyrx75nI0Fs8zvt2i/FByW/dCPMAdsIxtpz7hXwlT8rOsKw50AsRyR/9Xp3MTcqwdB04t89/1O/w1cDnyilFU=",
+    "department": [
+        {
+            "name": "福委會",
+            "value": "Welfare"
+        },
+        {
+            "name": "人資部",
+            "value": "Capital"
+        }
+    ]
+}
