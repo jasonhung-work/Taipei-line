@@ -23,7 +23,7 @@ app.get('/airPollutionInfo', function (request, response) {
     var fs = require('fs');
     fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/index.htm', 'utf8', function (err, data) {
         if (err) {
-            res.send(err);
+            this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
@@ -34,7 +34,7 @@ app.get('/airPollutionInfo'+'/airmap', function (request, response) {
     var fs = require('fs');
     fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/airMap.htm', 'utf8', function (err, data) {
         if (err) {
-            res.send(err);
+            this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
@@ -46,7 +46,7 @@ app.get('/floodControl', function (request, response) {
     var fs = require('fs');
     fs.readFile(__dirname + '/pages/tpe/channelwebs/floodControl/index.htm', 'utf8', function (err, data) {
         if (err) {
-            res.send(err);
+            this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
