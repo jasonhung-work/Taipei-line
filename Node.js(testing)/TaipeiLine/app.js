@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');  //JSON解析body的資料
 app.use(bodyParser.urlencoded({  //app使用bodyParser來做解析
     extended: true
 }));
-//test
 app.use(bodyParser.json());
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
