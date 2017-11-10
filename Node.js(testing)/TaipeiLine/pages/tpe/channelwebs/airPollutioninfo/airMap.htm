@@ -165,13 +165,11 @@ endif;
             }).fail(function (jqXhr, text, et) {
                 console.error(et);
             });
-            mapCenter = [{
-                name: "28C2DDDD41ED",
-                center:  {lat: 25.059188, lng: 121.521013},
-                pm25: {lat: -36.397, lng: 110.644},
-                color: 'red'
-            }];
-            drawMap(distCenter[ac],mapCenter, 1.5);
+            $.getJSON('/FakeMap.json', function(data, err){
+                if(err) console.log(err);
+                var boxCircle = data.BOXCIRCLE;
+                drawMap(distCenter[ac],boxCircle, 1.5);
+            });    
         }
 
         function drawMap(mapCenter, box, radius) {
