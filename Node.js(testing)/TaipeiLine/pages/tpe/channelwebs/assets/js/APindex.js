@@ -80,7 +80,7 @@ function showAirboxInfo(sel) {
             var dist = jsonData[0].info_to_show;
             //var jsonData = JSON.parse(data['data']);
             //var dist = JSON.parse(jsonData[0]['info_to_show']);
-            console.log("jsonData: " +JSON.stringify(jsonData));
+            console.log("jsonData: " + JSON.stringify(jsonData));
             console.log("dist: " + dist);
             airinfo.innerHTML = '<p style="line-height:0.5;">【' + sel.innerHTML + '】</p>';
             if (typeof dist['result'][0] === 'undefined') {
@@ -112,7 +112,7 @@ function showAirboxInfo(sel) {
                     airinfo.appendChild(iaa);
                 }
 
-                //checkIsSubscribed(sel, airinfo);
+                checkIsSubscribed(sel, airinfo);
                 // deal with modal
                 var w = (window.innerWidth > 0) ? window.innerWidth : screen.width,
                     h = (window.innerHeight > 0) ? window.innerHeight : screen.height;
@@ -126,6 +126,16 @@ function showAirboxInfo(sel) {
 }
 
 function checkIsSubscribed(sel, airinfoblock) {
+    var editbtn = document.createElement('button'),
+        cancelbtn = document.createElement('button');
+    editbtn.innerHTML = '訂閱/修改' + sel.innerHTML + '空氣盒子資訊';
+    editbtn.className = 'sbtn--want';
+    editbtn.setAttribute('data-mid', sel.dataset.mid);
+    editbtn.setAttribute('data-postcode', sel.dataset.postcode);
+    editbtn.value = sel.value;
+    editbtn.setAttribute('onclick', 'gotoSetupPage(this)');
+    airinfoblock.appendChild(editbtn);
+    /*
     $.ajax({
         url: API_HOST + SRU + '/listSubscriptionContainer/',
         data: {
@@ -166,7 +176,7 @@ function checkIsSubscribed(sel, airinfoblock) {
                 airinfoblock.appendChild(editbtn);
             }
         }
-    }).fail(function (jqXhr, text, et) { });
+    }).fail(function (jqXhr, text, et) { });*/
     var cancelbtn = document.createElement('button');
 }
 
@@ -206,3 +216,4 @@ function closeAirRst() {
     var modal = document.getElementById('air__modal');
     modal.style.display = 'none';
 }
+

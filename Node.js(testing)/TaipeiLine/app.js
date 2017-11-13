@@ -39,11 +39,11 @@ app.get('/airPollutionInfo'+'/airmap', function (request, response) {
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-app.get('/airPollutionInfo'+'/activeSuggestion', function (request, response) {
-    console.log('GET /setting request (activeSuggestion)');
+app.get('/airPollutionInfo'+'/setupAirboxSubInfo', function (request, response) {
+    console.log('GET /setting request (setupAirboxSubInfo)');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
-    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/activeSuggestion.htm', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/setupAirboxSubInfo.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
@@ -61,7 +61,17 @@ app.get('/floodControl', function (request, response) {
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-
+app.get('/floodControl'+'/NCDR_text', function (request, response) {
+    console.log('GET /setting request (setupAirboxSubInfo)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/floodControl/NCDR_text.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
 ////////////////////////////////////////////////////////////////////////////////////////
 app.use(express.static('pages/tpe'));
 ////////////////////////////////////////////////////////////////////////////////////////
