@@ -102,8 +102,11 @@ window.addEventListener("load", function(e) {
 });
 
 function showAirboxInfo(sel) {
+    console.log(sel);
     var airinfo = document.getElementById('air__info'),
         modal = document.getElementById('air__modal');
+
+
     var payload = {
         'datasetId': 'airbox',
         'authToken': AUTH_TOKEN,
@@ -112,61 +115,33 @@ function showAirboxInfo(sel) {
     };
     //var api = API_HOST + SRU + '/listDatasetInfoToShow/';
     var api = SRU + '/listDatasetInfoToShow/';
-    $.ajax({
-        //url: api,
-        url: api + "index.php",
-        data: payload,
-        method: 'GET',
-        dataType: 'json',
-        async: true
-    }).done(function(data) {
-        if (data['result'] === false) {
-            airinfo.innerHTML = '';
-            alert('此區域尚無資料可見!');
-            return;
-        } else {
-            var jsonData = JSON.parse(data['data']);
-            var dist = JSON.parse(jsonData[0]['info_to_show']);
-            airinfo.innerHTML = '<p style="line-height:0.5;">【' + sel.innerHTML + '】</p>';
-            if (typeof dist['result'][0] === 'undefined') {
-                airinfo.innerHTML += '<span style="font-size:20px;margin-bottom:10px;display:block;">本區域尚無資料</span>';
-            } else {
-                airinfo.innerHTML += '<span style="font-size:20px;margin-bottom:10px;display:block;">各監測點空氣盒子如下:</span>';
-                var le = document.createElement('br');
-                for (var i in dist['result']) {
-                    var infoPerLine = document.createElement('span');
-                    infoPerLine.style.display = 'block';
-                    if (typeof dist['result'][i]['pm25'] !== 'undefined') {
-                        var infoText = dist['result'][i]['deviceName'] +
-                            ' PM2.5濃度 : <span class="pm25desc" style="color:' +
-                            pm25Color(dist['result'][i]['pm25']) + '">' +
-                            dist['result'][i]['pm25'] + '</span>';
-                        infoPerLine.innerHTML = infoText;
-                        airinfo.appendChild(infoPerLine);
-                    }
-                }
-                var toappend = {
-                    '查看活動建議請點我': '../index.php?page=apsa',
-                    '查看地圖資訊請點我': '../index.php?page=apm&ptc=' + sel.dataset.postcode,
-                };
-                for (var j in toappend) {
-                    var iaa = document.createElement('a');
-                    iaa.href = toappend[j];
-                    iaa.style.fontSize = '22px';
-                    iaa.innerHTML = '<br>' + j + '<br>';
-                    airinfo.appendChild(iaa);
-                }
-            }
-            checkIsSubscribed(sel, airinfo);
-            // deal with modal
-            var w = (window.innerWidth > 0) ? window.innerWidth : screen.width,
-                h = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-            modal.style.display = 'block';
-            modal.style.width = w - 50 + 'px';
-            modal.style.height = h - 20 + 'px';
-            return;
-        }
-    }).fail(function(jqXhr, text, et) {});
+
+    airinfo.innerHTML = '<p style="line-height:0.5;">【' + sel.innerHTML + '】</p>';
+
+    airinfo.innerHTML += '<span style="font-size:20px;margin-bottom:10px;display:block;">各監測點空氣盒子如下:</span>';
+    var le = document.createElement('br');
+
+    var toappend = {
+        '查看活動建議請點我': '../airPollutionInfo/activeSuggestion',
+        '查看地圖資訊請點我': '../airPollutionInfo/airMap?page=apm&ptc=' + sel.dataset.postcode,
+    };
+    for (var j in toappend) {
+        var iaa = document.createElement('a');
+        iaa.href = toappend[j];
+        iaa.style.fontSize = '22px';
+        iaa.innerHTML = '<br>' + j + '<br>';
+        airinfo.appendChild(iaa);
+    }
+
+    //checkIsSubscribed(sel, airinfo);
+    // deal with modal
+    var w = (window.innerWidth > 0) ? window.innerWidth : screen.width,
+        h = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+    modal.style.display = 'block';
+    modal.style.width = w - 50 + 'px';
+    modal.style.height = h - 20 + 'px';
+    return;
+
 }
 
 function checkIsSubscribed(sel, airinfoblock) {

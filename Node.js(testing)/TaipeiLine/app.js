@@ -39,9 +39,19 @@ app.get('/airPollutionInfo'+'/airmap', function (request, response) {
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-
+app.get('/airPollutionInfo'+'/activeSuggestion', function (request, response) {
+    console.log('GET /setting request (activeSuggestion)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/activeSuggestion.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
 app.get('/floodControl', function (request, response) {
-    console.log('GET /setting request');
+    console.log('GET /setting request floodControl');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
     fs.readFile(__dirname + '/pages/tpe/channelwebs/floodControl/index.htm', 'utf8', function (err, data) {
