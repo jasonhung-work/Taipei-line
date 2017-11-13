@@ -126,7 +126,7 @@ endif;
         function getLatLng(did, distCenter) {
             var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE[getURIQueryString('ptc')]);
             //var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE['104']);
-            console.log("ac:　"+ ac);
+            console.log("ac:　"+ ac+ "地區: "+'【' + getGeocodeName(TAIWAN_POSTWITHGEO_CODE_TPE[getURIQueryString('ptc')]) + '】空氣盒子地圖');
             var payload = {
                 'datasetId': did,
                 'areaCode': ac,
@@ -175,7 +175,9 @@ endif;
         function drawMap(mapCenter, box, radius) {
             console.log(box);
             console.log(box[0].color);
-            console.log(box.length);
+            console.log(box[0].name);
+            console.log(box[0].pm25);
+            console.log(box[0].center);
             var h = (window.innerHeight > 0) ? window.innerHeight : screen.height;
             document.getElementById('map').style.height = h - 100 + 'px';
 
@@ -191,34 +193,35 @@ endif;
                 streetViewControl: false
             });
             var school = new google.maps.InfoWindow;
-            for(var i=0; i<box.length; i++) {
+            box.forEach(function(element) {
                 var effectCircle = new google.maps.Circle({
                     strokeColor: '#000',
                     strokeOpacity: 1.0,
                     strokeWeight: 2,
-                    fillColor: box[i].color,
+                    fillColor: element.color,
                     fillOpacity: 0.5,
                     map: map,
                     center: {
-                        lat: box[i].center.lat,
-                        lng: box[i].center.lng
+                        lat: element.center.lat,
+                        lng: element.center.lng
                     },
                     radius: Math.sqrt(radius) * 200
                 });
-                var schoolDetail = box[i].name + '<br>PM2.5濃度' + box[i].pm25 + '(' + pm25Str(box[i].pm25) + ')';
+                var schoolDetail = element.name + '<br>PM2.5濃度' + element.pm25 + '(' + pm25Str(element.pm25) + ')';
                 google.maps.event.addListener(effectCircle, 'click', function (e) {
                     school.setPosition({
-                        lat: box[i].center.lat,
-                        lng: box[i].center.lng
+                        lat: element.center.lat,
+                        lng: element.center.lng
                     });
                     school.setContent(schoolDetail);
                     map.setCenter({
-                        lat: box[i].center.lat,
-                        lng: box[i].center.lng
+                        lat: element.center.lat,
+                        lng: element.center.lng
                     });
                     school.open(map);
                 });
-            }
+            });
+
         }
     </script>
     <style>
