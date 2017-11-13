@@ -124,9 +124,9 @@ endif;
         });
 
         function getLatLng(did, distCenter) {
-            //var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE[getURIQueryString('ptc')]);
-            var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE['104']);
-            console.log(ac);
+            var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE[getURIQueryString('ptc')]);
+            //var ac = getGeocode(TAIWAN_POSTWITHGEO_CODE_TPE['104']);
+            console.log("ac:　"+ ac);
             var payload = {
                 'datasetId': did,
                 'areaCode': ac,
