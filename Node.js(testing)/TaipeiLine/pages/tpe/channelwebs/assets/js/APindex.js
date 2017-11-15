@@ -55,7 +55,6 @@ window.addEventListener("load", function (e) {
 });
 
 function showAirboxInfo(sel) {
-    console.log(sel);
     var airinfo = document.getElementById('air__info'),
         modal = document.getElementById('air__modal');
 

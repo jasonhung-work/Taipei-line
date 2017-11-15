@@ -61,6 +61,7 @@ app.get('/air_pollutioninfo'+'/setup_airbox_subinfo', function (request, respons
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
+///////////////////////////////////////////////////////////////////
 app.get('/flood_control', function (request, response) {
     console.log('GET /setting request floodControl');
     request.header("Content-Type", 'text/html');
@@ -73,10 +74,43 @@ app.get('/flood_control', function (request, response) {
     }.bind({ req: request, res: response }));
 });
 app.get('/flood_control'+'/ncdr_text', function (request, response) {
-    console.log('GET /setting request (setupAirboxSubInfo)');
+    console.log('GET /setting request (ncdr_text)');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
     fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/ncdr_text.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/EOC', function (request, response) {
+    console.log('GET /setting request (EOC)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/EOC.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/NCDRSubLists', function (request, response) {
+    console.log('GET /setting request (NCDRSubLists)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/NCDRSubLists.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/NCDRFlood', function (request, response) {
+    console.log('GET /setting request (NCDRFlood)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/NCDRFlood.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
