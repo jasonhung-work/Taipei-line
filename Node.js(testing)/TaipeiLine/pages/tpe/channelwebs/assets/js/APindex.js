@@ -101,8 +101,8 @@ function showAirboxInfo(sel) {
                     }
                 }
                 var toappend = {
-                    '查看活動建議請點我': '../airPollutionInfo/activeSuggestion',
-                    '查看地圖資訊請點我': '../airPollutionInfo/airMap?page=apm&ptc=' + sel.dataset.postcode,
+                    '查看活動建議請點我': '../air_pollutioninfo/active_suggestion',
+                    '查看地圖資訊請點我': '../air_pollutioninfo/air_map?page=apm&ptc=' + sel.dataset.postcode,
                 };
                 for (var j in toappend) {
                     var iaa = document.createElement('a');
