@@ -1,10 +1,11 @@
 // 建立 express service
 var express = require('express');  // var 宣告express物件， require請求
 var app = express();
-var port = process.env.PORT || 3000;  //run 在3000 port上
+var port = process.env.PORT || 8080;  //run 在8080 port上
 var http = require('http');
 var server = http.Server(app).listen(port);
 var bodyParser = require('body-parser');  //JSON解析body的資料
+var mysql = require('mysql'); // mysql
 app.use(bodyParser.urlencoded({  //app使用bodyParser來做解析
     extended: true
 }));
@@ -17,44 +18,100 @@ app.all('*', function (req, res, next) {
 });
 app.use(express.static('pages/tpe/channelwebs/assets'));
 
-app.get('/airPollutionInfo', function (request, response) {
+app.get('/air_pollutioninfo', function (request, response) {
     console.log('GET /setting request (空氣盒子)');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
-    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/index.htm', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/air_pollutioninfo/index.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-app.get('/airPollutionInfo'+'/airmap', function (request, response) {
+app.get('/air_pollutioninfo'+'/air_map', function (request, response) {
     console.log('GET /setting request (GoogleMap)');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
-    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/airMap.htm', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/air_pollutioninfo/air_map.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-app.get('/airPollutionInfo'+'/activeSuggestion', function (request, response) {
+app.get('/air_pollutioninfo'+'/active_suggestion', function (request, response) {
     console.log('GET /setting request (activeSuggestion)');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
-    fs.readFile(__dirname + '/pages/tpe/channelwebs/airPollutionInfo/activeSuggestion.htm', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/air_pollutioninfo/active_suggestion.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
         this.res.send(data);
     }.bind({ req: request, res: response }));
 });
-app.get('/floodControl', function (request, response) {
+app.get('/air_pollutioninfo'+'/setup_airbox_subinfo', function (request, response) {
+    console.log('GET /setting request (setupAirboxSubInfo)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/air_pollutioninfo/setup_airbox_subinfo.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+///////////////////////////////////////////////////////////////////
+app.get('/flood_control', function (request, response) {
     console.log('GET /setting request floodControl');
     request.header("Content-Type", 'text/html');
     var fs = require('fs');
-    fs.readFile(__dirname + '/pages/tpe/channelwebs/floodControl/index.htm', 'utf8', function (err, data) {
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/index.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/ncdr_text', function (request, response) {
+    console.log('GET /setting request (ncdr_text)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/ncdr_text.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/EOC', function (request, response) {
+    console.log('GET /setting request (EOC)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/EOC.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/NCDRSubLists', function (request, response) {
+    console.log('GET /setting request (NCDRSubLists)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/NCDRSubLists.htm', 'utf8', function (err, data) {
+        if (err) {
+            this.res.send(err);
+        }
+        this.res.send(data);
+    }.bind({ req: request, res: response }));
+});
+app.get('/flood_control'+'/NCDRFlood', function (request, response) {
+    console.log('GET /setting request (NCDRFlood)');
+    request.header("Content-Type", 'text/html');
+    var fs = require('fs');
+    fs.readFile(__dirname + '/pages/tpe/channelwebs/flood_control/NCDRFlood.htm', 'utf8', function (err, data) {
         if (err) {
             this.res.send(err);
         }
@@ -62,6 +119,33 @@ app.get('/floodControl', function (request, response) {
     }.bind({ req: request, res: response }));
 });
 
+//mysql (測試階段)
+var connection = mysql.createConnection({ 
+    host: 'localhost', //如果database在另一台機器上，要改這裡
+    user: 'root',
+    password: '',
+    database: 'tplinetest' //要抓的database名稱
+});
+connection.connect(function(error){ // mysql
+    if(!!error){
+        console.log('Error');
+    }else{
+        console.log('Connected');
+    }
+});
+app.get('/',function(req, res){ // mysql
+    //about mysql
+    connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, rows, fields){
+    //connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, result){
+        //callback
+        if(!!error){
+            console.log('Error in the query');
+        }else{
+            console.log('Successful query');
+        }
+    });
+})
+//mysql
 ////////////////////////////////////////////////////////////////////////////////////////
 app.use(express.static('pages/tpe'));
 ////////////////////////////////////////////////////////////////////////////////////////

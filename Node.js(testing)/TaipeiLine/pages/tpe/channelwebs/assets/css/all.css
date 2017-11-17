@@ -144,6 +144,12 @@ button {
     font-size: 20px;
     background-color: #F6AD3A;
 }
+#subc__desc1 {
+    font-family: inherit;
+    font-weight: 520;
+    font-size: 20px;
+    background-color: #F6AD3A;
+}
 
 #subc__desc>p {
     margin: 0px 0 10px 0;
