@@ -1,7 +1,49 @@
-window.addEventListener("load", function(e) {
-    document.addEventListener("deviceready", function(e) {
-        document.addEventListener('touchstart', function(e) { e.stopPropagation(); }, false);
-        LCS.Interface.getProfile(function(data) {
+window.addEventListener("load", function (e) {
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    var eocd = document.getElementById('eoc_disaster'),
+        ncdrwsc = document.getElementById('ncdr_workschoolclose'),
+        ncdrf = document.getElementById('ncdr_flood'),
+        ncdrwg = document.getElementById('ncdr_watergate'),
+        ncdrp = document.getElementById('ncdr_parking');
+
+    eocd.addEventListener('click', gotoEOC, false);
+    ncdrwsc.addEventListener('click', gotoNCDRSubList, false);
+    ncdrf.addEventListener('click', gotoNCDRFlood, false);
+    ncdrwg.addEventListener('click', gotoNCDRSubList, false);
+    ncdrp.addEventListener('click', gotoNCDRSubList, false);
+    function gotoNCDRFlood(sel) {
+        location.href = '/flood_control/NCDRFlood?mid=' + sel.currentTarget.memberId + '&did=' + sel.currentTarget.value;
+    }
+
+    function gotoEOC(sel) {
+        $.ajax({
+            url: '/channelwebs/flood_control/GetCenterControl.php',
+            method: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data);
+            if (data['isCenterOpen'] === false) {
+                alert('僅應變中心開設時段提供查詢');
+                return;
+            }
+            location.href = '/flood_controlEOC?mid=' + sel.target.memberId + '&did=' + sel.target.value;
+        }).fail(function (jqXhr, text, et) { });
+    }
+
+    function gotoNCDRSubList(sel) {
+        location.href = '/flood_control/NCDRSubLists?mid=' + sel.currentTarget.memberId + '&did=' + sel.currentTarget.value;
+    }
+
+    function notAvailableYet() {
+        alert('即將開放!');
+        return;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    document.addEventListener("deviceready", function (e) {
+        document.addEventListener('touchstart', function (e) { e.stopPropagation(); }, false);
+        LCS.Interface.getProfile(function (data) {
             var mid = data.id;
             var options = {
                 pageKey: "index",
@@ -33,12 +75,13 @@ window.addEventListener("load", function(e) {
             ncdrf.addEventListener('click', gotoNCDRFlood, false);
             ncdrwg.addEventListener('click', gotoNCDRSubList, false);
             ncdrp.addEventListener('click', gotoNCDRSubList, false);
-        }, function() {
+        }, function () {
             alert('not validate member');
         });
 
         function gotoNCDRFlood(sel) {
-            location.href = 'NCDRFlood.php?mid=' + sel.currentTarget.memberId + '&did=' + sel.currentTarget.value;
+            alert('not 123');
+            location.href = 'NCDRFlood.htm?mid=' + sel.currentTarget.memberId + '&did=' + sel.currentTarget.value;
         }
 
         function gotoEOC(sel) {
@@ -46,13 +89,13 @@ window.addEventListener("load", function(e) {
                 url: './GetCenterControl.php',
                 method: 'GET',
                 dataType: 'json'
-            }).done(function(data) {
+            }).done(function (data) {
                 if (data['isCenterOpen'] === false) {
                     alert('僅應變中心開設時段提供查詢');
                     return;
                 }
                 location.href = 'EOC.php?mid=' + sel.target.memberId + '&did=' + sel.target.value;
-            }).fail(function(jqXhr, text, et) {});
+            }).fail(function (jqXhr, text, et) { });
         }
 
         function gotoNCDRSubList(sel) {
