@@ -125,6 +125,7 @@ var connection = mysql.createConnection({
     user: 'root',
     password: '654321',
     database: 'world' //要抓的database名稱
+
 });
 connection.connect(function(error){ // mysql
     if(!!error){
@@ -143,6 +144,18 @@ connection.query("SELECT * FROM country" /*要抓的database名稱*/, function(e
         console.log('Successful query');
         console.log(result);
     }
+});
+app.get('/',function(req, res){ // mysql
+    //about mysql
+    connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, rows, fields){
+    //connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, result){
+        //callback
+        if(!!error){
+            console.log('Error in the query');
+        }else{
+            console.log('Successful query');
+        }
+    });
 });
 //mysql
 ////////////////////////////////////////////////////////////////////////////////////////
