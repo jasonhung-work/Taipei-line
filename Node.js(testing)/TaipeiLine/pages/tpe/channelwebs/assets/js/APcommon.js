@@ -32,7 +32,7 @@ function getURIQueryString(name, url) {
 
 function gotoSetupPage(sel, action) {
     action = (typeof action === 'undefined') ? '' : action;
-    location.href = 'setupAirboxSubInfo.php?mid=' + sel.dataset.mid + '&act=' + action + '&ac=' + sel.value + '&ptc=' + sel.dataset.postcode;
+    location.href = '/air_pollutioninfo/setup_airbox_subinfo?mid=' + sel.dataset.mid + '&act=' + action + '&ac=' + sel.value + '&ptc=' + sel.dataset.postcode;
 }
 
 function pm25Color(pm25) {
