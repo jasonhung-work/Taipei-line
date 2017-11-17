@@ -123,28 +123,27 @@ app.get('/flood_control'+'/NCDRFlood', function (request, response) {
 var connection = mysql.createConnection({ 
     host: 'localhost', //如果database在另一台機器上，要改這裡
     user: 'root',
-    password: '',
-    database: 'tplinetest' //要抓的database名稱
+    password: '654321',
+    database: 'world' //要抓的database名稱
 });
 connection.connect(function(error){ // mysql
     if(!!error){
         console.log('Error');
+        console.log(error);
     }else{
         console.log('Connected');
     }
 });
-app.get('/',function(req, res){ // mysql
-    //about mysql
-    connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, rows, fields){
-    //connection.query("SELECT * FROM tplinetest" /*要抓的database名稱*/, function(error, result){
-        //callback
-        if(!!error){
-            console.log('Error in the query');
-        }else{
-            console.log('Successful query');
-        }
-    });
-})
+connection.query("SELECT * FROM country" /*要抓的database名稱*/, function(error, result){
+    //callback
+    if(!!error){
+        console.log('Error in the query');
+        console.log(error);
+    }else{
+        console.log('Successful query');
+        console.log(result);
+    }
+});
 //mysql
 ////////////////////////////////////////////////////////////////////////////////////////
 app.use(express.static('pages/tpe'));
